@@ -1,0 +1,208 @@
+{% extends "main/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% if category %}{{ category.name }}{% elif query %}Результаты поиска{% else %}Каталог книг{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="section pt-4">
+    <div class="container-xl px-3 px-lg-4">
+        <div class="catalog-page">
+            <div class="catalog-toolbar glass-panel mb-4">
+                <div>
+                    <span class="eyebrow">{% trans "Smart catalog" %}</span>
+                    <h1 class="mb-2">
+                        {% if category %}{% trans "Категория:" %} {{ category.name }}
+                        {% elif query %}{% trans "Результаты поиска по" %} "{{ query }}"
+                        {% else %}{% trans "Каталог книг" %}
+                        {% endif %}
+                    </h1>
+                    <p class="catalog-summary mb-0">
+                        {% trans "Фильтруйте литературу по специальности, языку и направлению — всё оформлено в более чистом и мобильном интерфейсе." %}
+                    </p>
+                </div>
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-arrow-down-up me-1"></i> {% trans "Сортировать" %}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                            <li><a class="dropdown-item" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}sort=title">{% trans "По названию" %}</a></li>
+                            <li><a class="dropdown-item" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}sort=author">{% trans "По автору" %}</a></li>
+                            <li><a class="dropdown-item" href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}sort=year">{% trans "По году" %}</a></li>
+                        </ul>
+                    </div>
+                    <a href="{% if category %}{% url 'main:book_list_by_category' category.slug %}{% else %}{% url 'main:index' %}{% endif %}" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-clockwise me-1"></i> {% trans "Сбросить" %}
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <aside class="col-lg-3">
+                    <div class="filters-card glass-panel sticky-top" style="top: 1rem;">
+                        <div class="filter-title mb-3">
+                            <h5 class="mb-1"><i class="bi bi-sliders me-2"></i>{% trans "Фильтры" %}</h5>
+                            <p class="text-muted small mb-0">{% trans "Настройте выдачу под свои задачи" %}</p>
+                        </div>
+
+                        <form method="get" id="filterForm">
+                            {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                            {% if sort_by %}<input type="hidden" name="sort" value="{{ sort_by }}">{% endif %}
+
+                            {% if categories %}
+                            <div class="mb-3">
+                                <h6 class="text-muted"><i class="bi bi-tags me-1"></i> {% trans "Категория" %}</h6>
+                                {% for cat in categories %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="{{ cat.id }}" id="category_{{ cat.id }}" {% if cat.id in selected_category_ids %}checked{% endif %}>
+                                    <label class="form-check-label" for="category_{{ cat.id }}">{{ cat.name }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            {% endif %}
+
+                            {% if school_types %}
+                            <div class="mb-3">
+                                <h6 class="text-muted"><i class="bi bi-building me-1"></i> {% trans "Тип школы" %}</h6>
+                                {% for school_type in school_types %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="school_type" value="{{ school_type.id }}" id="school_{{ school_type.id }}" {% if school_type.id in selected_school_types %}checked{% endif %}>
+                                    <label class="form-check-label" for="school_{{ school_type.id }}">{{ school_type.name }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            {% endif %}
+
+                            {% if specializations %}
+                            <div class="mb-3">
+                                <h6 class="text-muted"><i class="bi bi-mortarboard me-1"></i> {% trans "Специализация" %}</h6>
+                                {% for specialization in specializations %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="specialization" value="{{ specialization.id }}" id="spec_{{ specialization.id }}" {% if specialization.id in selected_specializations %}checked{% endif %}>
+                                    <label class="form-check-label" for="spec_{{ specialization.id }}">{{ specialization.name }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <h6 class="text-muted"><i class="bi bi-lightbulb me-1"></i> {% trans "Направление" %}</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="subject_area" value="humanitarian" id="subject_area_humanitarian" {% if 'humanitarian' in selected_subject_areas %}checked{% endif %}>
+                                    <label class="form-check-label" for="subject_area_humanitarian">{% trans "Гуманитарное" %}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="subject_area" value="technical" id="subject_area_technical" {% if 'technical' in selected_subject_areas %}checked{% endif %}>
+                                    <label class="form-check-label" for="subject_area_technical">{% trans "Техническое" %}</label>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="mb-4">
+                                <h6 class="text-muted"><i class="bi bi-translate me-1"></i> {% trans "Язык" %}</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="language" value="ru" id="language_ru" {% if selected_language == 'ru' %}checked{% endif %}>
+                                    <label class="form-check-label" for="language_ru">{% trans "Русский" %}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="language" value="kk" id="language_kk" {% if selected_language == 'kk' %}checked{% endif %}>
+                                    <label class="form-check-label" for="language_kk">{% trans "Қазақша" %}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="language" value="en" id="language_en" {% if selected_language == 'en' %}checked{% endif %}>
+                                    <label class="form-check-label" for="language_en">{% trans "English" %}</label>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-1"></i> {% trans "Применить" %}
+                                </button>
+                                <a href="{% if category %}{% url 'main:book_list_by_category' category.slug %}{% else %}{% url 'main:index' %}{% endif %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle me-1"></i> {% trans "Очистить" %}
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </aside>
+
+                <div class="col-lg-9">
+                    {% if not books %}
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle-fill me-2"></i> {% trans "Книги не найдены." %}
+                    </div>
+                    {% else %}
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                        {% for Book_Info in books %}
+                        <div class="col">
+                            <article class="card h-100 book-card library-book-card">
+                                <div class="book-cover">
+                                    {% if Book_Info.image %}
+                                    <img src="{{ Book_Info.image.url }}" class="card-img-top" alt="{{ Book_Info.title }}">
+                                    {% else %}
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 220px;">
+                                        <i class="bi bi-book" style="font-size: 3rem; color: #b9c4d3;"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary">{{ Book_Info.category.name }}</span>
+                                        {% if Book_Info.available_copies > 0 %}
+                                        <span class="badge rounded-pill bg-success">{{ Book_Info.available_copies }} {% trans "шт." %}</span>
+                                        {% else %}
+                                        <span class="badge rounded-pill bg-danger">0</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <h5 class="card-title">{{ Book_Info.title|truncatechars:50 }}</h5>
+                                    <p class="card-text text-muted">{{ Book_Info.author }}</p>
+
+                                    <div class="small mb-3 d-flex flex-wrap gap-1">
+                                        {% if Book_Info.school_type %}
+                                        <span class="badge bg-info-subtle text-dark">{{ Book_Info.school_type.name }}</span>
+                                        {% endif %}
+                                        {% if Book_Info.specialization %}
+                                        <span class="badge bg-warning text-dark">{{ Book_Info.specialization.name }}</span>
+                                        {% endif %}
+                                        {% if Book_Info.subject_area %}
+                                        <span class="badge bg-secondary">{{ Book_Info.get_subject_area_display }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mt-auto d-grid gap-2">
+                                        <a href="{% url 'main:book_detail' Book_Info.id %}" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-book me-1"></i> {% trans "Подробнее" %}
+                                        </a>
+                                        {% if Book_Info.pdf_file %}
+                                        <a href="{{ Book_Info.pdf_file.url }}" class="btn btn-info btn-sm" download>
+                                            <i class="bi bi-download me-1"></i> PDF
+                                        </a>
+                                        {% endif %}
+                                        {% if Book_Info.id in saved_books_ids %}
+                                        <a href="{% url 'main:toggle_saved_book' Book_Info.id %}" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-bookmark-dash me-1"></i> {% trans "Убрать" %}
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'main:toggle_saved_book' Book_Info.id %}" class="btn btn-outline-success btn-sm">
+                                            <i class="bi bi-bookmark-plus me-1"></i> {% trans "Сохранить" %}
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

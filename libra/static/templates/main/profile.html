@@ -1,0 +1,276 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Мой профиль - Библиотека Колледжа" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 20px 20px;
+    }
+    .avatar-container {
+        position: relative;
+        display: inline-block;
+    }
+    .avatar-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+        height: 100%;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+    }
+    .stat-label {
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+    .info-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .info-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.25rem;
+    }
+    .info-value {
+        color: #6c757d;
+        margin-bottom: 1rem;
+    }
+    .book-item {
+        padding: 1rem;
+        border-left: 3px solid #667eea;
+        background: #f8f9fa;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+    .book-item:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+    }
+    .overdue {
+        border-left-color: #dc3545;
+        background: #fff5f5;
+    }
+    .badge-overdue {
+        background-color: #dc3545;
+    }
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 10px 30px;
+        border-radius: 25px;
+        transition: all 0.3s;
+    }
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    .nav-tabs .nav-link {
+        color: #495057;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+    }
+    .nav-tabs .nav-link.active {
+        color: #667eea;
+        border-bottom: 3px solid #667eea;
+        background: transparent;
+    }
+    .nav-tabs .nav-link:hover {
+        border-color: transparent;
+        color: #667eea;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% trans "Не указано" as not_specified %}
+{% trans "Не указан" as not_specified_m %}
+{% trans "Не указана" as not_specified_f %}
+{% trans "Не указаны" as not_specified_pl %}
+{% trans "Пользователь пока ничего не рассказал о себе" as no_bio %}
+<div class="profile-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3 text-center text-md-start">
+                <div class="avatar-container">
+                    {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" class="avatar-img" alt="{% trans 'Аватар' %}">
+                    {% else %}
+                    <div class="avatar-img d-flex align-items-center justify-content-center bg-primary text-white" style="font-size: 3rem; font-weight: bold;">
+                        {{ user.first_name|first|default:user.username|first|upper }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="display-5">{{ profile.full_name }}</h1>
+                <p class="lead mb-0">{{ user.email }}</p>
+                {% if profile.group_name %}
+                <p class="mb-0"><i class="bi bi-mortarboard"></i> {{ profile.group_name }}</p>
+                {% endif %}
+                {% if profile.student_id %}
+                <p><i class="bi bi-credit-card"></i> {% trans "Студенческий билет:" %} {{ profile.student_id }}</p>
+                {% endif %}
+            </div>
+            <div class="col-md-3 text-center text-md-end">
+                <a href="{% url 'main:profile_edit' %}" class="btn btn-edit">
+                    <i class="bi bi-pencil-square"></i> {% trans "Редактировать профиль" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Вкладки -->
+    <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">
+                <i class="bi bi-person-badge"></i> {% trans "Личная информация" %}
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved" type="button" role="tab">
+                <i class="bi bi-bookmark-star"></i> {% trans "Сохранённые книги" %}
+                {% if saved_books %}<span class="badge bg-primary ms-2">{{ saved_books|length }}</span>{% endif %}
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- Вкладка: Личная информация -->
+        <div class="tab-pane fade show active" id="info" role="tabpanel">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <h4><i class="bi bi-person-circle"></i> {% trans "Основная информация" %}</h4>
+                        <hr>
+                        <div class="info-label">{% trans "Имя и фамилия" %}</div>
+                        <div class="info-value">{{ profile.full_name|default:not_specified }}</div>
+                        
+                        <div class="info-label">{% trans "Email" %}</div>
+                        <div class="info-value">{{ user.email }}</div>
+                        
+                        <div class="info-label">{% trans "Телефон" %}</div>
+                        <div class="info-value">{{ profile.phone|default:not_specified_m }}</div>
+                        
+                        <div class="info-label">{% trans "Дата рождения" %}</div>
+                        <div class="info-value">{{ profile.birth_date|date:"d.m.Y"|default:not_specified_f }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <h4><i class="bi bi-building"></i> {% trans "Учебная информация" %}</h4>
+                        <hr>
+                        <div class="info-label">{% trans "Группа" %}</div>
+                        <div class="info-value">{{ profile.group_name|default:not_specified_f }}</div>
+                        
+                        <div class="info-label">{% trans "Студенческий билет" %}</div>
+                        <div class="info-value">{{ profile.student_id|default:not_specified_m }}</div>
+                        
+                        <div class="info-label">{% trans "Адрес" %}</div>
+                        <div class="info-value">{{ profile.address|default:not_specified_m|linebreaks }}</div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="bi bi-chat-dots"></i> {% trans "Социальные сети" %}</h4>
+                        <hr>
+                        {% if profile.telegram %}
+                        <div class="info-label">Telegram</div>
+                        <div class="info-value">
+                            <a href="https://t.me/{{ profile.telegram|cut:'@' }}" target="_blank">{{ profile.telegram }}</a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.instagram %}
+                        <div class="info-label">Instagram</div>
+                        <div class="info-value">
+                            <a href="https://instagram.com/{{ profile.instagram|cut:'@' }}" target="_blank">{{ profile.instagram }}</a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if not profile.telegram and not profile.instagram %}
+                        <div class="info-value text-muted">{{ not_specified_pl }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="info-card">
+                        <h4><i class="bi bi-file-text"></i> {% trans "О себе" %}</h4>
+                        <hr>
+                        <div class="info-value">{{ profile.bio|default:no_bio|linebreaks }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка: Сохранённые книги -->
+        <div class="tab-pane fade" id="saved" role="tabpanel">
+            <div class="info-card">
+                <h4><i class="bi bi-bookmark-star"></i> {% trans "Сохранённые книги" %}</h4>
+                <hr>
+                {% if saved_books %}
+                    {% for book in saved_books %}
+                    <div class="book-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-7">
+                                <strong>{{ book.title }}</strong><br>
+                                <small class="text-muted">{{ book.author }}</small>
+                            </div>
+                            <div class="col-md-5 text-md-end">
+                                <a href="{% url 'main:book_detail' book.id %}" class="btn btn-sm btn-outline-primary mb-2">
+                                    <i class="bi bi-book"></i> {% trans "Подробнее" %}
+                                </a>
+                                <a href="{% url 'main:toggle_saved_book' book.id %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-bookmark-dash"></i> {% trans "Убрать" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-bookmark-star" style="font-size: 3rem; color: #dee2e6;"></i>
+                        <p class="mt-3 text-muted">{% trans "У вас пока нет сохранённых книг" %}</p>
+                        <a href="{% url 'main:index' %}" class="btn btn-primary mt-2">
+                            <i class="bi bi-search"></i> {% trans "Найти книгу" %}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

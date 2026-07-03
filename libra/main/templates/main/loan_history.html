@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "История выдач - Библиотека Колледжа" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-clock-history"></i> {% trans "История выдач книг" %}</h1>
+        <a href="{% url 'main:profile' %}" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> {% trans "Назад в профиль" %}
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>{% trans "Название книги" %}</th>
+                            <th>{% trans "Автор" %}</th>
+                            <th>{% trans "Дата выдачи" %}</th>
+                            <th>{% trans "Срок возврата" %}</th>
+                            <th>{% trans "Дата возврата" %}</th>
+                            <th>{% trans "Статус" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for loan in loans %}
+                        <tr>
+                            <td>
+                                <strong>{{ loan.book.title }}</strong>
+                                {% if loan.book.isbn %}
+                                <br><small class="text-muted">ISBN: {{ loan.book.isbn }}</small>
+                                {% endif %}
+                            </td>
+                            <td>{{ loan.book.author }}</td>
+                            <td>{{ loan.loan_date|date:"d.m.Y" }}</td>
+                            <td>{{ loan.due_date|date:"d.m.Y" }}</td>
+                            <td>
+                                {% if loan.return_date %}
+                                {{ loan.return_date|date:"d.m.Y" }}
+                                {% else %}
+                                <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if loan.status == 'returned' %}
+                                <span class="badge bg-success">{% trans "Возвращена" %}</span>
+                                {% elif loan.status == 'overdue' %}
+                                <span class="badge bg-danger">{% trans "Просрочена" %}</span>
+                                {% else %}
+                                <span class="badge bg-warning">{% trans "Активна" %}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="bi bi-journal-bookmark-fill" style="font-size: 3rem; color: #dee2e6;"></i>
+                                <p class="mt-3 text-muted">{% trans "У вас пока нет истории выдач" %}</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if loans %}
+            <div class="mt-3">
+                <p class="text-muted">{% trans "Всего выдано книг:" %} <strong>{{ total_loans }}</strong></p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

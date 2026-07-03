@@ -1,0 +1,133 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ book.title }} - Библиотека Колледжа{% endblock %}
+
+{% block content %}
+<section class="section pt-4">
+    <div class="container detail-page">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card detail-cover-card mb-4">
+                    <div class="detail-cover">
+                        {% if book.image %}
+                        <img src="{{ book.image.url }}" class="img-fluid" alt="{{ book.title }}">
+                        {% else %}
+                        <div class="detail-placeholder">
+                            <i class="bi bi-book"></i>
+                            <p class="mb-0 text-muted">{% trans "Нет обложки" %}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="availability-pill">
+                        <div>
+                            <strong>{% trans "Доступно" %}</strong>
+                            <div class="text-muted small">{{ book.available_copies }} {% trans "из" %} {{ book.total_copies }}</div>
+                        </div>
+                        <span class="badge rounded-pill {% if book.available_copies > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if book.available_copies > 0 %}{% trans "В наличии" %}{% else %}{% trans "Нет" %}{% endif %}
+                        </span>
+                    </div>
+
+                    <div class="action-stack">
+                        {% if book.pdf_file %}
+                        <a href="{{ book.pdf_file.url }}" class="btn btn-info btn-lg" download>
+                            <i class="bi bi-download me-1"></i> {% trans "Скачать PDF" %}
+                        </a>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'main:toggle_saved_book' book.id %}" class="btn {% if is_saved %}btn-outline-danger{% else %}btn-primary{% endif %} btn-lg">
+                            <i class="bi bi-bookmark{% if is_saved %}-dash{% else %}-plus{% endif %} me-1"></i>
+                            {% if is_saved %}{% trans "Удалить из сохранённых" %}{% else %}{% trans "Сохранить книгу" %}{% endif %}
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> {% trans "Войдите, чтобы сохранить" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card p-4">
+                    <h5 class="mb-3"><i class="bi bi-info-circle me-2"></i>{% trans "Информация о доступности" %}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                            <span>{% trans "Всего экземпляров:" %}</span>
+                            <span class="badge bg-secondary">{{ book.total_copies }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                            <span>{% trans "Доступно сейчас:" %}</span>
+                            <span class="badge {% if book.available_copies > 0 %}bg-success{% else %}bg-danger{% endif %}">{{ book.available_copies }}</span>
+                        </li>
+                        <li class="list-group-item bg-transparent px-0">
+                            <small class="text-muted">{% trans "На руках у читателей:" %} {{ checked_out }}</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="detail-meta">
+                            <span class="badge rounded-pill bg-primary">{{ book.category.name }}</span>
+                            <span class="badge rounded-pill bg-secondary">{% if book.year %}{{ book.year }}{% else %}—{% endif %}</span>
+                            {% if book.isbn %}<span class="badge rounded-pill bg-info text-dark">ISBN: {{ book.isbn }}</span>{% endif %}
+                        </div>
+
+                        <h1>{{ book.title }}</h1>
+                        <h4 class="text-muted mb-4"><i class="bi bi-person me-1"></i> {{ book.author }}</h4>
+
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="bi bi-journal-text me-2"></i>{% trans "Описание" %}</h5>
+                            <div class="detail-description">
+                                {% if book.description %}
+                                    {{ book.description|linebreaks }}
+                                {% else %}
+                                    <p class="text-muted mb-0">{% trans "Описание пока не добавлено." %}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="meta-grid">
+                            <div class="meta-item">
+                                <span>{% trans "Категория" %}</span>
+                                <strong>{{ book.category.name }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span>{% trans "Дата добавления" %}</span>
+                                <strong>{{ book.date_added|date:"d.m.Y" }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-3"><i class="bi bi-bookmarks me-2"></i>{% trans "Похожие книги" %}</h5>
+                        <div class="row g-3 mt-1">
+                            {% for similar_book in similar_books %}
+                            <div class="col-md-4">
+                                <div class="similar-book-card">
+                                    <h6>{{ similar_book.title|truncatechars:40 }}</h6>
+                                    <p class="small mb-3">{{ similar_book.author }}</p>
+                                    <a href="{% url 'main:book_detail' similar_book.id %}" class="btn btn-sm btn-outline-primary">
+                                        {% trans "Подробнее" %}
+                                    </a>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted mb-0">{% trans "Нет похожих книг" %}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

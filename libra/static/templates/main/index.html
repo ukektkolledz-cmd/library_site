@@ -1,0 +1,161 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Главная - Библиотека Колледжа{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-title text-center mx-auto">
+            <span class="eyebrow">Электронная библиотека</span>
+            <h1>Найди нужную книгу, статью или учебный материал за пару секунд</h1>
+            <p class="hero-subtitle">Каталог учебной литературы и электронных ресурсов для студентов и преподавателей колледжа.</p>
+            <div class="hero-buttons d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
+                {% if user.is_authenticated %}
+                <a href="{% url 'main:index' %}" class="btn btn-light btn-lg text-dark">Перейти в каталог</a>
+                <a href="{% url 'main:profile' %}" class="btn btn-outline-light btn-lg">Мой профиль</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-light btn-lg text-dark">Войдите, чтобы открыть каталог</a>
+                <a href="{% url 'main:register' %}" class="btn btn-outline-light btn-lg">Регистрация</a>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+            <form class="search-box mt-5" method="GET" action="{% url 'main:index' %}">
+                <div class="input-group input-group-lg shadow-sm">
+                    <input type="text" class="form-control" name="q" placeholder="Поиск книги, автора или темы..." value="{{ request.GET.q }}">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Найти</button>
+                </div>
+            </form>
+            {% else %}
+            <div class="alert alert-info mt-5">Войдите, чтобы искать книги и просматривать каталог.</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<div class="container site-section">
+    <div class="row gx-5">
+        <main class="col-lg-8">
+            <div class="section-header mb-4">
+                <span class="eyebrow">Новые поступления</span>
+                <h2>Свежие книги из нашего каталога</h2>
+                <p class="text-muted">Просмотрите последние добавленные книги и учебные материалы.</p>
+            </div>
+            <div class="row g-4">
+                {% for book in new_books %}
+                <div class="col-md-6">
+                    <article class="news-card h-100">
+                        <div class="position-relative">
+                            {% if book.image %}
+                            <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+                            {% else %}
+                            <div class="bg-light text-center py-5">
+                                <i class="bi bi-book" style="font-size: 3rem; color: #6c757d;"></i>
+                            </div>
+                            {% endif %}
+                            <span class="badge bg-primary category-badge">{{ book.category.name }}</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ book.title|truncatechars:60 }}</h5>
+                            <p class="card-text mb-3">{{ book.author }}</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-secondary">{{ book.year }}</span>
+                                    {% if book.available_copies > 0 %}
+                                    <span class="badge bg-success">Доступно: {{ book.available_copies }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Нет в наличии</span>
+                                    {% endif %}
+                                </div>
+                                <a href="{% url 'main:book_detail' book.id %}" class="btn btn-primary w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-secondary">Пока нет новых книг для отображения.</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section-header mt-5 mb-4">
+                <span class="eyebrow">Сервисы</span>
+                <h2>Быстрый доступ к разделам</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <a href="{% if user.is_authenticated %}{% url 'main:index' %}?category=textbook{% else %}{% url 'login' %}{% endif %}" class="text-decoration-none">
+                        <div class="feature-card h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-journal-text text-primary"></i>
+                                <h5 class="mt-4">Учебники</h5>
+                                <p class="text-muted">Каталог учебной литературы по всем дисциплинам.</p>
+                            </div>
+                            <span class="badge bg-primary mt-3">Перейти</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% if user.is_authenticated %}{% url 'main:index' %}?category=e-resource{% else %}{% url 'login' %}{% endif %}" class="text-decoration-none">
+                        <div class="feature-card h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-laptop text-success"></i>
+                                <h5 class="mt-4">Электронные ресурсы</h5>
+                                <p class="text-muted">Доступ к электронным статьям, журналам и материалам.</p>
+                            </div>
+                            <span class="badge bg-primary mt-3">Открыть</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% if user.is_authenticated %}{% url 'main:profile' %}{% else %}{% url 'login' %}{% endif %}" class="text-decoration-none">
+                        <div class="feature-card h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-person-check text-warning"></i>
+                                <h5 class="mt-4">Мой профиль</h5>
+                                <p class="text-muted">Просмотр истории, бронирований и списка желаемого.</p>
+                            </div>
+                            <span class="badge bg-primary mt-3">Войти</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <aside class="col-lg-4">
+            <div class="sidebar-card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">Статистика</h5>
+                    <div class="stat-card mb-3">
+                        <h3>15K+</h3>
+                        <p>Книг в каталоге</p>
+                    </div>
+                    <div class="stat-card mb-3">
+                        <h3>2.5K+</h3>
+                        <p>Электронных изданий</p>
+                    </div>
+                    <div class="stat-card mb-0">
+                        <h3>24/7</h3>
+                        <p>Доступ к материалам</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">Контакты</h5>
+                    <p class="small mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Усть-Каменогорск, ул. Бажова, 68</p>
+                    <p class="small mb-2"><i class="bi bi-telephone-fill me-2"></i>Приемная: 50-25-00</p>
+                    <p class="small mb-2"><i class="bi bi-telephone-fill me-2"></i>Учебная часть: 50-50-27</p>
+                    <p class="small mb-0"><i class="bi bi-envelope-fill me-2"></i>ukkaf@rambler.ru</p>
+                </div>
+            </div>
+            <div class="sidebar-card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">Наши партнеры</h5>
+                    <p class="text-muted">Сотрудничество с образовательными и информационными ресурсами для студентов и преподавателей.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}

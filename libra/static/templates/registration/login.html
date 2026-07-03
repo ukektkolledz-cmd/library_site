@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Вход - Библиотека Колледжа" %}{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="container py-5">
+        <div class="row g-5 justify-content-center align-items-center">
+            <div class="col-lg-6">
+                <div class="auth-hero rounded-4 shadow-lg p-5">
+                    <span class="eyebrow">{% trans "Здравствуйте снова" %}</span>
+                    <h1>{% trans "Вход в личный кабинет" %}</h1>
+                    <p class="auth-text">{% trans "Войти в систему и получить доступ к личной библиотеке, бронированиям и истории выдач." %}</p>
+                    <div class="auth-hero-features mt-4">
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "Персональный доступ к каталогам" %}</div>
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "Быстрый поиск и скачивание" %}</div>
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "Удобное управление бронированиями" %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card auth-card rounded-4 shadow-sm overflow-hidden">
+                    <div class="card-body p-5">
+                        <h2 class="mb-4">{% trans "Войти" %}</h2>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="id_username" class="form-label">{% trans "Имя пользователя" %}</label>
+                                <input type="text" name="username" id="id_username" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_password" class="form-label">{% trans "Пароль" %}</label>
+                                <input type="password" name="password" id="id_password" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">{% trans "Войти" %}</button>
+                            </div>
+                            <div class="mt-3 text-end">
+                                <a href="{% url 'password_reset' %}">{% trans "Забыли пароль?" %}</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white text-center py-4">
+                        <small class="text-muted">{% trans "Нет аккаунта?" %} <a href="{% url 'main:register' %}">{% trans "Зарегистрируйтесь" %}</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

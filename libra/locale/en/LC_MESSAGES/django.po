@@ -1,0 +1,637 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: AI <noreply@example.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "PDF файлов"
+msgstr "PDF files"
+
+msgid "Автору"
+msgstr "By author"
+
+msgid "Авторы"
+msgstr "Authors"
+
+msgid "Админ-панель"
+msgstr "Admin panel"
+
+msgid "Библиотека УК-ЭТК"
+msgstr "UK-ETK Library"
+
+msgid "Библиотека колледжа"
+msgstr "College library"
+
+msgid ""
+"Виртуальная библиотека УК-ЭТК. Учебная литература, электронные ресурсы и "
+"материалы онлайн."
+msgstr ""
+"UK-ETK virtual library. Educational literature, electronic resources, and "
+"online materials."
+
+msgid "Войдите, чтобы сохранить"
+msgstr "Log in to save"
+
+msgid "Войти"
+msgstr "Log in"
+
+msgid "Всего экземпляров:"
+msgstr "Total copies:"
+
+msgid "Вход - Библиотека Колледжа"
+msgstr "Login - College Library"
+
+msgid "Выберите направление обучения"
+msgstr "Choose a study direction"
+
+msgid "Выйти"
+msgstr "Log out"
+
+msgid "Главная"
+msgstr "Home"
+
+msgid "Главная - Библиотека колледжа"
+msgstr "Home - College Library"
+
+msgid "Году издания"
+msgstr "By year"
+
+msgid "Дата добавления"
+msgstr "Date added"
+
+msgid "Добро пожаловать"
+msgstr "Welcome"
+
+msgid "Доступно сейчас"
+msgstr "Available now"
+
+msgid "Доступно сейчас:"
+msgstr "Available now:"
+
+msgid "Доступно экземпляров:"
+msgstr "Available copies:"
+
+msgid "Журнал бронирования"
+msgstr "Reservation journal"
+
+msgid "Зарегистрируйтесь"
+msgstr "Register"
+
+msgid "Издательство"
+msgstr "Publisher"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Информация о доступности"
+msgstr "Availability information"
+
+msgid ""
+"Ищите книги, учебные пособия и электронные ресурсы для учебы и научной "
+"работы. Всё в одном месте — быстро, удобно и бесплатно."
+msgstr ""
+"Search for books, textbooks, and electronic resources for study and "
+"research. Everything in one place — fast, convenient, and free."
+
+msgid "Каталог"
+msgstr "Catalog"
+
+msgid "Каталог книг"
+msgstr "Book catalog"
+
+msgid ""
+"Каталог учебной литературы для рабочих, экономических и технических "
+"специальностей."
+msgstr ""
+"Catalog of educational literature for vocational, economic, and technical "
+"specialties."
+
+msgid "Книг в каталоге"
+msgstr "Books in catalog"
+
+msgid "Книги и материалы по данной категории."
+msgstr "Books and materials in this category."
+
+msgid "Книги не найдены."
+msgstr "No books found."
+
+msgid "Сайт колледжа"
+msgstr "College site"
+
+msgid "Логотип"
+msgstr "Logo"
+
+msgid "Лучшие книги месяца"
+msgstr "Best books of the month"
+
+msgid "Мой кабинет"
+msgstr "My profile"
+
+msgid "Мой профиль"
+msgstr "My profile"
+
+msgid "На руках у читателей:"
+msgstr "Checked out by readers:"
+
+msgid "Названию"
+msgstr "Title"
+
+msgid "Найти"
+msgstr "Find"
+
+msgid "Нет аккаунта?"
+msgstr "No account?"
+
+msgid "Новинка"
+msgstr "New"
+
+msgid "Новинки каталога"
+msgstr "Catalog highlights"
+
+msgid "О библиотеке"
+msgstr "About the library"
+
+msgid "Открыть"
+msgstr "Open"
+
+msgid "Очистить"
+msgstr "Clear"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Подтвердите пароль"
+msgstr "Confirm password"
+
+msgid "Поиск книг..."
+msgstr "Search books..."
+
+msgid "Поиск книги"
+msgstr "Search book"
+
+msgid "Поиск книги, автора или темы..."
+msgstr "Search book, author, or topic..."
+
+msgid ""
+"Поиск нужных книг, отслеживание историй и доступ к учебным ресурсам в одном "
+"месте."
+msgstr ""
+"Find the books you need, track histories, and access study resources in one "
+"place."
+
+msgid "Последние поступления"
+msgstr "Latest arrivals"
+
+msgid "Похожие книги"
+msgstr "Similar books"
+
+msgid "Практическое руководство по IT"
+msgstr "Practical IT guide"
+
+msgid "Применить фильтры"
+msgstr "Apply filters"
+
+msgid "Профиль"
+msgstr "Profile"
+
+msgid "Разделы"
+msgstr "Sections"
+
+msgid "Регистрация"
+msgstr "Register"
+
+msgid "Регистрация - Библиотека Колледжа"
+msgstr "Registration - College Library"
+
+msgid "Свежие книги, которые уже доступны для чтения и загрузки."
+msgstr "Fresh books already available for reading and downloading."
+
+msgid "Скачать PDF"
+msgstr "Download PDF"
+
+msgid "Современные методики преподавания"
+msgstr "Modern teaching methods"
+
+msgid "Создать аккаунт"
+msgstr "Create account"
+
+msgid "Сортировать по"
+msgstr "Sort by"
+
+msgid "Специализация"
+msgstr "Specialization"
+
+msgid "Специальности"
+msgstr "Specialties"
+
+msgid "Список категорий будет доступен позже."
+msgstr "The list of categories will be available later."
+
+msgid "Тип школы"
+msgstr "School type"
+
+msgid "Уже есть аккаунт?"
+msgstr "Already have an account?"
+
+msgid "Усть-Каменогорск, ул. Бажова, 68"
+msgstr "Ust-Kamenogorsk, Bazhova St., 68"
+
+msgid "Усть-Каменогорский колледж экономики и техники. Все права защищены."
+msgstr ""
+"Ust-Kamenogorsk College of Economics and Technology. All rights reserved."
+
+msgid "Учебник по математике"
+msgstr "Mathematics textbook"
+
+msgid "Целевая группа"
+msgstr "Target group"
+
+msgid "Электронная библиотека колледжа экономики и техники"
+msgstr "College of Economics and Technology electronic library"
+
+msgid "из"
+msgstr "of"
+
+msgid "Здравствуйте снова"
+msgstr "Hello again"
+
+msgid "Вход в личный кабинет"
+msgstr "Sign in to your account"
+
+msgid "Ваше пространство для чтения и работы с каталогом. Откройте доступ к сохранённым книгам, бронированиям и персональным рекомендациям."
+msgstr "Your space for reading and using the catalog. Access saved books, reservations, and personal recommendations."
+
+msgid "Быстрый доступ к книгам"
+msgstr "Quick access to books"
+
+msgid "История бронирований"
+msgstr "Reservation history"
+
+msgid "Персональный кабинет читателя"
+msgstr "Personal reader dashboard"
+
+msgid "Присоединяйтесь к библиотеке"
+msgstr "Join the library"
+
+msgid "Сохранение любимых книг"
+msgstr "Save favorite books"
+
+msgid "Удобное отслеживание выдач"
+msgstr "Easy loan tracking"
+
+msgid "Доступ к электронным материалам"
+msgstr "Access to digital materials"
+
+msgid "Заполните профиль, чтобы получать персональные рекомендации и быстрее находить нужную литературу."
+msgstr "Complete your profile to receive personalized recommendations and find the right literature faster."
+
+msgid "История выдач"
+msgstr "Loan history"
+
+msgid "Следите за текущими и завершёнными выдачами книг."
+msgstr "Track current and completed book loans."
+
+msgid "Активные выдачи"
+msgstr "Active loans"
+
+msgid "Архив"
+msgstr "Archive"
+
+msgid "Вы ещё не брали книги в библиотеке."
+msgstr "You have not borrowed any books from the library yet."
+
+msgid "Всего выдано книг:"
+msgstr "Total books borrowed:"
+
+msgid "Редактировать профиль"
+msgstr "Edit profile"
+
+msgid "Личные данные"
+msgstr "Personal details"
+
+msgid "Загрузите новое фото для профиля."
+msgstr "Upload a new profile photo."
+
+msgid "Текущая фотография"
+msgstr "Current photo"
+
+msgid "Новый аватар"
+msgstr "New avatar"
+
+msgid "Сохранить изменения"
+msgstr "Save changes"
+
+msgid "Вернуться в профиль"
+msgstr "Back to profile"
+
+msgid "Информация профиля"
+msgstr "Profile information"
+
+msgid "Расскажите немного о себе, чтобы библиотека стала удобнее и персональнее."
+msgstr "Tell us a little about yourself to make the library more convenient and personal."
+
+msgid "Изменить"
+msgstr "Edit"
+
+msgid "Имя"
+msgstr "First name"
+
+msgid "Фамилия"
+msgstr "Last name"
+
+msgid "Нет описания"
+msgstr "No description"
+
+msgid "О себе"
+msgstr "About me"
+
+msgid "Избранные книги"
+msgstr "Saved books"
+
+msgid "Книги, которые вы сохранили для быстрого доступа."
+msgstr "Books you saved for quick access."
+
+msgid "Вы пока не сохранили ни одной книги."
+msgstr "You have not saved any books yet."
+
+msgid "Настройки профиля"
+msgstr "Profile settings"
+
+msgid "Редактирование профиля"
+msgstr "Profile editing"
+
+msgid "Обновите личные данные, аватар и краткую информацию о себе."
+msgstr "Update your personal details, avatar, and a short note about yourself."
+
+msgid "Пользователь пока ничего не рассказал о себе"
+msgstr "The user has not shared anything about themselves yet"
+
+msgid "Не указано"
+msgstr "Not specified"
+
+msgid "Журнал бронирования книг - Администратор"
+msgstr "Book reservation journal - Admin"
+
+msgid "Журнал бронирования книг"
+msgstr "Book reservation journal"
+
+msgid "Управление бронированиями и отслеживание доступности книг"
+msgstr "Manage reservations and track book availability"
+
+msgid "Создать новую бронь"
+msgstr "Create a new reservation"
+
+msgid "Управление в админке"
+msgstr "Manage in admin panel"
+
+msgid "Всего бронирований"
+msgstr "Total reservations"
+
+msgid "Активных"
+msgstr "Active"
+
+msgid "Возвращено"
+msgstr "Returned"
+
+msgid "Книг доступно/Тип Книг"
+msgstr "Available books / book types"
+
+msgid "Фильтры"
+msgstr "Filters"
+
+msgid "Статус"
+msgstr "Status"
+
+msgid "Все статусы"
+msgstr "All statuses"
+
+msgid "Зарезервирована"
+msgstr "Reserved"
+
+msgid "Группа"
+msgstr "Group"
+
+msgid "Поиск по группе"
+msgstr "Search by group"
+
+msgid "Книга"
+msgstr "Book"
+
+msgid "Поиск по названию"
+msgstr "Search by title"
+
+msgid "Группы"
+msgstr "Groups"
+
+msgid "Нет групп"
+msgstr "No groups"
+
+msgid "Бронирования"
+msgstr "Reservations"
+
+msgid "записей"
+msgstr "records"
+
+msgid "Студент"
+msgstr "Student"
+
+msgid "Преподаватель"
+msgstr "Teacher"
+
+msgid "Количество"
+msgstr "Quantity"
+
+msgid "Дата бронирования"
+msgstr "Reservation date"
+
+msgid "Дата окончания"
+msgstr "End date"
+
+msgid "Возврат"
+msgstr "Return"
+
+msgid "Действия"
+msgstr "Actions"
+
+msgid "Активна"
+msgstr "Active"
+
+msgid "Просрочена"
+msgstr "Overdue"
+
+msgid "Нет бронирований"
+msgstr "No reservations"
+
+msgid "Страница"
+msgstr "Page"
+
+msgid "Доступность книг"
+msgstr "Book availability"
+
+msgid "Название"
+msgstr "Title"
+
+msgid "Автор"
+msgstr "Author"
+
+msgid "Всего"
+msgstr "Total"
+
+msgid "Доступно"
+msgstr "Available"
+
+msgid "Выданы"
+msgstr "Issued"
+
+msgid "Процент"
+msgstr "Percent"
+
+msgid "Нет книг"
+msgstr "No books"
+
+msgid "Имя студента"
+msgstr "Student name"
+
+msgid "Имя преподавателя"
+msgstr "Teacher name"
+
+msgid "Выберите книгу"
+msgstr "Select a book"
+
+msgid "Дата и время бронирования"
+msgstr "Reservation date and time"
+
+msgid "Дата и время окончания"
+msgstr "End date and time"
+
+msgid "Примечания"
+msgstr "Notes"
+
+msgid "Создать бронь"
+msgstr "Create reservation"
+
+msgid "Ошибка: CSRF токен не найден"
+msgstr "Error: CSRF token not found"
+
+msgid "Книга возвращена"
+msgstr "Book returned"
+
+msgid "Книга отмечена как возвращенная!"
+msgstr "The book has been marked as returned!"
+
+msgid "Ошибка при обновлении статуса:"
+msgstr "Error updating status:"
+
+msgid "Ошибка сети. Попробуйте еще раз."
+msgstr "Network error. Please try again."
+
+msgid "Отметить как возвращенную"
+msgstr "Mark as returned"
+
+msgid "Просмотреть детали"
+msgstr "View details"
+
+msgid "Навигация по страницам"
+msgstr "Page navigation"
+
+msgid "Первая"
+msgstr "First"
+
+msgid "Предыдущая"
+msgstr "Previous"
+
+msgid "Следующая"
+msgstr "Next"
+
+msgid "Последняя"
+msgstr "Last"
+
+msgid "У вас нет доступа к этой странице."
+msgstr "You do not have access to this page."
+
+msgid "Профиль не найден."
+msgstr "Profile not found."
+
+msgid "Книга \"%(title)s\" удалена из сохранённых."
+msgstr "The book \"%(title)s\" has been removed from saved items."
+
+msgid "Книга \"%(title)s\" сохранена."
+msgstr "The book \"%(title)s\" has been saved."
+
+msgid "Ваш профиль успешно обновлён!"
+msgstr "Your profile has been updated successfully!"
+
+msgid "Пожалуйста, исправьте ошибки в форме."
+msgstr "Please correct the errors in the form."
+
+msgid "Бронирование книги \"%(title)s\" отменено."
+msgstr "The reservation for \"%(title)s\" has been canceled."
+
+msgid "Невозможно отменить это бронирование."
+msgstr "This reservation cannot be canceled."
+
+msgid "Книга временно недоступна"
+msgstr "The book is temporarily unavailable"
+
+msgid "Вы уже забронировали эту книгу"
+msgstr "You have already reserved this book"
+
+msgid "Книга \"%(title)s\" снова забронирована!"
+msgstr "The book \"%(title)s\" has been reserved again!"
+
+msgid "Книга \"%(title)s\" забронирована!"
+msgstr "The book \"%(title)s\" has been reserved!"
+
+msgid "Не удалось создать бронь. Попробуйте позже."
+msgstr "Could not create the reservation. Please try again later."
+
+msgid "Регистрация прошла успешно. Вы вошли в систему."
+msgstr "Registration was successful. You are now signed in."
+
+msgid "Пожалуйста, исправьте ошибки в форме регистрации."
+msgstr "Please correct the errors in the registration form."
+
+msgid "Вы вышли из системы. Пожалуйста, зарегистрируйтесь или войдите снова."
+msgstr "You have signed out. Please register or sign in again."
+
+msgid "У вас нет доступа к этой функции."
+msgstr "You do not have access to this feature."
+
+msgid "Количество должно быть больше 0."
+msgstr "Quantity must be greater than 0."
+
+msgid "Недостаточно доступных копий. Доступно: %(available)s, запрошено: %(requested)s."
+msgstr "Not enough copies are available. Available: %(available)s, requested: %(requested)s."
+
+msgid "Бронь для \"%(student)s\" на книгу \"%(title)s\" (%(quantity)s шт.) создана успешно!"
+msgstr "The reservation for \"%(student)s\" for the book \"%(title)s\" (%(quantity)s pcs.) was created successfully!"
+
+msgid "Выбранная книга не найдена."
+msgstr "The selected book was not found."
+
+msgid "Ошибка в формате данных: %(error)s"
+msgstr "Data format error: %(error)s"
+
+msgid "Ошибка при создании брони: %(error)s"
+msgstr "Error creating reservation: %(error)s"
+
+msgid "Укажите имя студента."
+msgstr "Enter the student's name."
+
+msgid "Укажите группу."
+msgstr "Enter the group."
+
+msgid "Некорректный формат даты и времени."
+msgstr "Incorrect date and time format."
+
+msgid "Дата окончания должна быть позже даты бронирования."
+msgstr "The end date must be later than the reservation date."
+

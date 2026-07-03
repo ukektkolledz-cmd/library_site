@@ -1,0 +1,220 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Редактирование профиля" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .edit-form-container {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .form-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+    .form-section {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .form-section h4 {
+        color: #495057;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #dee2e6;
+    }
+    .current-avatar {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .current-avatar img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #667eea;
+    }
+    .btn-save {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="edit-form-container">
+        <div class="form-header">
+            <h2 class="mb-0"><i class="bi bi-pencil-square"></i> {% trans "Редактирование профиля" %}</h2>
+            <p class="mb-0 mt-2">{% trans "Заполните информацию о себе, чтобы другие пользователи могли узнать вас лучше" %}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Аватар -->
+            <div class="form-section">
+                <h4><i class="bi bi-camera"></i> {% trans "Фото профиля" %}</h4>
+                {% if profile.avatar %}
+                <div class="current-avatar">
+                    <img src="{{ profile.avatar.url }}" alt="{% trans 'Текущий аватар' %}">
+                    <p class="text-muted mt-2">{% trans "Текущее фото" %}</p>
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                    {{ profile_form.avatar.label_tag }}
+                    {{ profile_form.avatar }}
+                    {% if profile_form.avatar.help_text %}
+                    <small class="form-text text-muted">{{ profile_form.avatar.help_text }}</small>
+                    {% endif %}
+                    {% for error in profile_form.avatar.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Основная информация -->
+                    <div class="form-section">
+                        <h4><i class="bi bi-person-badge"></i> {% trans "Основная информация" %}</h4>
+                        
+                        <div class="mb-3">
+                            {{ user_form.first_name.label_tag }}
+                            {{ user_form.first_name }}
+                            {% for error in user_form.first_name.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ user_form.last_name.label_tag }}
+                            {{ user_form.last_name }}
+                            {% for error in user_form.last_name.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ user_form.email.label_tag }}
+                            {{ user_form.email }}
+                            {% for error in user_form.email.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.phone.label_tag }}
+                            {{ profile_form.phone }}
+                            {% for error in profile_form.phone.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.birth_date.label_tag }}
+                            {{ profile_form.birth_date }}
+                            {% for error in profile_form.birth_date.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <!-- Учебная информация -->
+                    <div class="form-section">
+                        <h4><i class="bi bi-mortarboard"></i> {% trans "Учебная информация" %}</h4>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.group_name.label_tag }}
+                            {{ profile_form.group_name }}
+                            {% for error in profile_form.group_name.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.student_id.label_tag }}
+                            {{ profile_form.student_id }}
+                            {% for error in profile_form.student_id.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.address.label_tag }}
+                            {{ profile_form.address }}
+                            {% for error in profile_form.address.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Социальные сети -->
+                    <div class="form-section">
+                        <h4><i class="bi bi-share"></i> {% trans "Социальные сети" %}</h4>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.telegram.label_tag }}
+                            {{ profile_form.telegram }}
+                            {% for error in profile_form.telegram.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ profile_form.instagram.label_tag }}
+                            {{ profile_form.instagram }}
+                            {% for error in profile_form.instagram.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- О себе -->
+            <div class="form-section">
+                <h4><i class="bi bi-file-text"></i> {% trans "О себе" %}</h4>
+                <div class="mb-3">
+                    {{ profile_form.bio.label_tag }}
+                    {{ profile_form.bio }}
+                    {% for error in profile_form.bio.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-save btn-lg">
+                    <i class="bi bi-check-lg"></i> {% trans "Сохранить изменения" %}
+                </button>
+                <a href="{% url 'main:profile' %}" class="btn btn-outline-secondary btn-lg ms-2">
+                    <i class="bi bi-x-lg"></i> {% trans "Отмена" %}
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

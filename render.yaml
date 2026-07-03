@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: libraryy
+    env: python
+    buildCommand: ./build.sh
+    startCommand: bash ./start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DEBUG
+        value: False
+      - key: DATABASE_URL
+        fromDatabase:
+          name: libraryy-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: EMAIL_HOST
+        sync: false
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: EMAIL_USE_TLS
+        value: True
+      - key: DEFAULT_FROM_EMAIL
+        sync: false
+      - key: USE_S3
+        value: False
+      - key: B2_ACCESS_KEY_ID
+        sync: false
+      - key: B2_SECRET_ACCESS_KEY
+        sync: false
+      - key: B2_BUCKET_NAME
+        sync: false
+      - key: B2_REGION
+        sync: false
+      - key: B2_ENDPOINT_URL
+        sync: false
+      - key: B2_MEDIA_PUBLIC_DOMAIN
+        sync: false
+      - key: B2_MEDIA_PUBLIC
+        value: True
+
+databases:
+  - name: libraryy-db
+    plan: free
+    databaseName: libra_db
+    user: libra_admin

@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Подтверждение регистрации" %}{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card auth-card rounded-4 shadow-sm overflow-hidden">
+                    <div class="card-body p-5">
+                        <h2 class="mb-4">{% trans "Подтверждение аккаунта" %}</h2>
+                        <p class="mb-4">
+                            {% trans "Мы отправили 6-значный код на адрес" %} <strong>{{ email }}</strong>.
+                            {% trans "Введите его ниже, чтобы завершить регистрацию." %}
+                        </p>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                            {% endif %}
+                            <div class="mb-4">
+                                {{ form.code.label_tag }}
+                                {{ form.code }}
+                                {% if form.code.errors %}
+                                    <div class="text-danger small">{{ form.code.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">{% trans "Подтвердить аккаунт" %}</button>
+                                <a href="{% url 'main:resend_verification_code' %}" class="btn btn-outline-secondary">{% trans "Отправить код повторно" %}</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white text-center py-4">
+                        <small class="text-muted"><a href="{% url 'main:register' %}">{% trans "Вернуться к регистрации" %}</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

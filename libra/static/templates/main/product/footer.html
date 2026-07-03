@@ -1,0 +1,47 @@
+{% load static i18n %}
+<footer class="footer py-5">
+    <div class="container">
+        <div class="footer-card">
+            <div class="row gy-4 align-items-start">
+                <div class="col-lg-4">
+                    <a class="footer-brand" href="{% url 'main:main_page' %}">
+                        <img src="{% static 'images/logo.png' %}" alt="{% trans "Логотип" %}">
+                        <span>{% trans "Библиотека УК-ЭТК" %}</span>
+                    </a>
+                    <p class="medium mb-3">{% trans "Современная онлайн-библиотека для студентов и преподавателей: книги, PDF и быстрый доступ к учебным материалам." %}</p>
+                    <div class="footer-meta">
+                        <span><i class="bi bi-lightning-charge-fill"></i> {% trans "Быстрый поиск" %}</span>
+                        <span><i class="bi bi-bookmark-heart-fill"></i> {% trans "Сохранённые книги" %}</span>
+                        <span><i class="bi bi-phone-fill"></i> {% trans "Удобно с телефона" %}</span>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h6>{% trans "Навигация" %}</h6>
+                    <div class="footer-links">
+                        <a href="{% url 'main:main_page' %}">{% trans "Главная" %}</a>
+                        <a href="{% url 'main:index' %}">{% trans "Каталог" %}</a>
+                        <a href="{% url 'main:profile' %}">{% trans "Профиль" %}</a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <h6>{% trans "Контакты" %}</h6>
+                    <p class="small mb-2"><i class="bi bi-geo-alt-fill me-2"></i><a href="https://2gis.kz/ust-kamenogorsk/firm/70000001020617575?m=82.600985%2C49.979649%2F16.98, ул. Бажова, 68" target="_blank" rel="noopener">{% trans "Усть-Каменогорск, ул. Бажова, 68" %}</a></p>
+                    <p class="small mb-2"><i class="bi bi-telephone-fill me-2"></i>50-25-00</p>
+                    <p class="small mb-0"><i class="bi bi-envelope-fill me-2"></i>ukkaf@rambler.ru</p>
+                </div>
+
+                <div class="col-lg-3">
+                    <h6>{% trans "О сервисе" %}</h6>
+                    <p class="medium mb-2">{% trans "Минималистичный интерфейс в духе iPhone: крупные карточки, мягкие тени и фокус на удобстве чтения." %}</p>
+                    <p class="small text-white-50 mb-0">{% trans "Поддержка каталога, бронирования и личного кабинета в одном месте." %}</p>
+                </div>
+            </div>
+
+            <div class="border-top border-white-10 mt-4 pt-3 text-center small">
+                &copy; 2026. {% trans "Усть-Каменогорский колледж экономики и техники. Все права защищены." %}
+            </div>
+        </div>
+    </div>
+</footer>

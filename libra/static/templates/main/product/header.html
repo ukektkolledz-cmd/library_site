@@ -1,0 +1,112 @@
+{% load static i18n %}
+{% get_current_language as CURRENT_LANGUAGE %}
+{% with current_view=request.resolver_match.view_name %}
+<header class="site-header">
+    <div class="topbar py-2">
+        <div class="container">
+            <div class="topbar-pill d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
+                <div class="topbar-left d-flex flex-wrap gap-3 small">
+                    <span><i class="bi bi-geo-alt-fill me-1"></i> {% trans "Усть-Каменогорск, ул. Бажова, 68" %}</span>
+                    <span><i class="bi bi-telephone-fill me-1"></i> 50-25-00</span>
+                    <span><i class="bi bi-envelope-fill me-1"></i> ukkaf@rambler.ru</span>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
+                    <a href="https://www.instagram.com/cef.kafu" class="topbar-social" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@cef_college" class="topbar-social" target="_blank" rel="noopener" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                    <span class="topbar-status"><i class="bi bi-circle-fill"></i> {% trans "Онлайн 24/7" %}</span>
+                    <div class="dropdown">
+                        <button class="btn language-pill dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if CURRENT_LANGUAGE == 'ru' %}Русский{% elif CURRENT_LANGUAGE == 'kk' %}Қазақша{% else %}English{% endif %}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="m-0">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                    <button type="submit" name="language" value="ru" class="dropdown-item">Русский</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="m-0">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                    <button type="submit" name="language" value="kk" class="dropdown-item">Қазақша</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="m-0">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                    <button type="submit" name="language" value="en" class="dropdown-item">English</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="nav-glass w-100">
+                <a class="navbar-brand d-flex align-items-center" href="{% url 'main:main_page' %}">
+                    <span class="brand-mark">
+                        <img src="{% static 'images/logo.png' %}" alt="{% trans "Логотип" %}" width="34" height="34">
+                    </span>
+                    <span>
+                        <strong>{% trans "Библиотека колледжа" %}</strong>
+                        <small>{% trans "Study • Read • Reserve" %}</small>
+                    </span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto mb-3 mb-lg-0 nav-pills-group">
+                        <li class="nav-item">
+                            <a class="nav-link {% if current_view == 'main:main_page' %}active{% endif %}" href="{% url 'main:main_page' %}">{% trans "Главная" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if current_view == 'main:index' or current_view == 'main:book_list_by_category' %}active{% endif %}" href="{% url 'main:index' %}">{% trans "Каталог" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://cef.kafu.kz" target="_blank" rel="noopener">{% trans "Сайт колледжа" %}</a>
+                        </li>
+                    </ul>
+
+                    <form class="quick-search d-none d-xl-flex" method="get" action="{% url 'main:index' %}">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control" name="q" placeholder="{% trans "Поиск книг..." %}" value="{{ request.GET.q }}">
+                    </form>
+
+                    <div class="nav-actions ms-lg-3 mt-3 mt-lg-0">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle me-1"></i> {{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'main:profile' %}"><i class="bi bi-person me-2"></i>{% trans "Мой профиль" %}</a></li>
+                                {% if user.is_staff %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'main:reservation_journal' %}"><i class="bi bi-journal-check me-2"></i>{% trans "Журнал бронирования" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-gear me-2"></i>{% trans "Админ-панель" %}</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i>{% trans "Выйти" %}</a></li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a class="btn btn-outline-primary" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>{% trans "Войти" %}</a>
+                        <a class="btn btn-primary text-white" href="{% url 'main:register' %}"><i class="bi bi-person-plus me-1"></i>{% trans "Регистрация" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endwith %}

@@ -1,0 +1,100 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Регистрация - Библиотека Колледжа" %}{% endblock %}
+
+{% block content %}
+<section class="auth-page bg-light">
+    <div class="container py-5">
+        <div class="row g-5 justify-content-center align-items-center">
+            <div class="col-lg-5 order-lg-2">
+                <div class="auth-hero rounded-4 shadow-lg p-5 bg-white">
+                    <span class="eyebrow">{% trans "Создайте аккаунт" %}</span>
+                    <h1>{% trans "Присоединяйтесь к библиотеке" %}</h1>
+                    <p class="auth-text">{% trans "Регистрация займёт всего пару минут. После отправки формы на вашу почту придёт код подтверждения, и только после него аккаунт будет активирован." %}</p>
+                    <div class="auth-hero-features mt-4">
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "Личный кабинет студента" %}</div>
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "История бронирований" %}</div>
+                        <div><i class="bi bi-check-circle-fill"></i> {% trans "Доступ к учебным материалам" %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 order-lg-1">
+                <div class="card auth-card rounded-4 shadow-sm overflow-hidden">
+                    <div class="card-body p-5">
+                        <h2 class="mb-4">{% trans "Регистрация" %}</h2>
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                            {% endif %}
+                            <div class="mb-4">
+                                <label for="id_username" class="form-label">{% trans "Имя пользователя" %}</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_email" class="form-label">{% trans "Email" %}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_person_type" class="form-label">{% trans "Тип пользователя" %}</label>
+                                <div class="border rounded-3 p-3">
+                                    {% for radio in form.person_type %}
+                                    <div class="form-check mb-2{% if forloop.last %} mb-0{% endif %}">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% if form.person_type.errors %}
+                                    <div class="text-danger small">{{ form.person_type.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_student_id" class="form-label">{% trans "ID студента/преподавателя" %}</label>
+                                {{ form.student_id }}
+                                <div class="form-text text-muted small mt-1">
+                                    {% trans "Если выбран преподаватель, ID проверяется по списку преподавателей и не конфликтует с ID студентов." %}
+                                </div>
+                                {% if form.student_id.errors %}
+                                    <div class="text-danger small">{{ form.student_id.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_password1" class="form-label">{% trans "Пароль" %}</label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="text-danger small">{{ form.password1.errors }}</div>
+                                {% endif %}
+                                <div class="form-text text-muted small mt-1">
+                                    <i class="bi bi-info-circle"></i>
+                                    {% trans "Минимум 8 символов, только латинские буквы, хотя бы одна цифра и один спецсимвол" %} <span class="text-secondary">(!@#$%^&*…)</span>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_password2" class="form-label">{% trans "Подтвердите пароль" %}</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger small">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">{% trans "Создать аккаунт" %}</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white text-center py-4">
+                        <small class="text-muted">{% trans "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% trans "Войти" %}</a></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
