@@ -3,7 +3,7 @@ services:
     name: libraryy
     env: python
     buildCommand: ./build.sh
-    startCommand: bash ./start.sh
+    startCommand: python -m gunicorn --bind 0.0.0.0:$PORT --chdir libra libra.wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.7
