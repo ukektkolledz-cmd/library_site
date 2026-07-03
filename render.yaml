@@ -8,39 +8,41 @@ services:
       - key: PYTHON_VERSION
         value: 3.12.7
       - key: DEBUG
-        value: "TRUE"
+        value: False
       - key: DATABASE_URL
-        value: "postgresql://admin_libra:RAEpt8V5RA5wM1DR4KmpYgDOHpoqpVso@dpg-d7kpu6df420s73ct6jc0-a/libra_db_2x7s"
+        fromDatabase:
+          name: libraryy-db
+          property: connectionString
       - key: SECRET_KEY
-        value: "012cf9b14a47377f61701f5cba99da4d"
+        generateValue: true
       - key: EMAIL_HOST
-        value: smtp.gmail.com
+        sync: false
       - key: EMAIL_PORT
-        value: "587"
+        value: 587
       - key: EMAIL_HOST_USER
-        value: "batrkhan4.0@gmail.com"
+        sync: false
       - key: EMAIL_HOST_PASSWORD
-        value: "vchk xrtd itim qaxs"
+        sync: false
       - key: EMAIL_USE_TLS
-        value: "TRUE"
+        value: True
       - key: DEFAULT_FROM_EMAIL
-        value: "Library <batrkhan4.0@gmail.com>"
+        sync: false
       - key: USE_S3
-        value: "TRUE"
+        value: True
       - key: B2_ACCESS_KEY_ID
-        value: "0037e72242da82c0000000003"
+        sync: false
       - key: B2_SECRET_ACCESS_KEY
-        value: "K0032Y5LBXoWLvC/jVXBwpqGIBqvARg"
+        sync: false
       - key: B2_BUCKET_NAME
-        value: "libra-cloud"
+        sync: false
       - key: B2_REGION
-        value: "eu-central-003"
+        sync: false
       - key: B2_ENDPOINT_URL
-        value: "https://s3.eu-central-003.backblazeb2.com"
+        sync: false
       - key: B2_MEDIA_PUBLIC_DOMAIN
-        value: ""
+        sync: false
       - key: B2_MEDIA_PUBLIC
-        value: "True"
+        value: True
 
 databases:
   - name: libraryy-db
